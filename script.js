@@ -9,13 +9,13 @@ startButton.style.fontSize = '16px';
 document.body.insertBefore(startButton, canvas);
 
 let audioCtx, analyser, bufferLength, dataArray;
+const FrequencyResolution = 1024;
 
 // Event listener for the Start button
 startButton.addEventListener('click', () => {
     // Initialize AudioContext and Analyser after user gesture
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioCtx.createAnalyser();
-    const FrequencyResolution = 1024;
     analyser.fftSize = FrequencyResolution;
     bufferLength = analyser.frequencyBinCount;
     dataArray = new Uint8Array(bufferLength);
