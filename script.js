@@ -1,4 +1,4 @@
-const canvas = document.getElementById('spectrum');
+const canvas = document.getElementById('spectrum_canvas');
 const ctx = canvas.getContext('2d');
 
 // Create and add the Start button only if it doesn’t exist
@@ -15,7 +15,8 @@ startButton.addEventListener('click', () => {
     // Initialize AudioContext and Analyser after user gesture
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
+    const FrequencyResolution = 1024;
+    analyser.fftSize = FrequencyResolution;
     bufferLength = analyser.frequencyBinCount;
     dataArray = new Uint8Array(bufferLength);
 
@@ -48,11 +49,23 @@ function draw() {
     const barWidth = (canvas.width / bufferLength) * 2.5;
     let barHeight;
     let x = 0;
+    let red = 10, green = 60, blue = 120;
+    let hue = 0, saturation = 100, lightness = 50;
 
     for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] / 2;
-
-        ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+        barHeight = dataArray[i] * 1.5;
+        //Create colors per bar using RGB
+        /*
+        red = (10 + (i * 1)) % 125;
+        green = (25 + (i * 2) + 15) % 175;
+        blue = (60 + (i * 3) + 30) % 255;
+        //Draw bars
+        ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+        */
+        //Create colors using HSL values
+        hue = 360 - Math.floor(((i / bufferLength) * 360) * 2 % 360);
+        //console.log(hue);
+        ctx.fillStyle = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
 
         x += barWidth + 1;
