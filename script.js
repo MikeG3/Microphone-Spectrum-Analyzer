@@ -90,22 +90,20 @@ function draw() {
 
 
 function drawFrequencyScale() {
+    const scaleDivisions = 10; // Number of labels
+    const maxFrequency = 20000; // Maximum frequency displayed
+
+    // Calculate responsive font size
+    const fontSize = Math.max(canvas.width / 50, 12); // Minimum font size 12px
+    ctx.font = `${fontSize}px Arial`;
     ctx.fillStyle = 'white';
-    ctx.font = '12px Arial';
     ctx.textAlign = 'center';
 
-    const sampleRate = 44100; // Adjust if using a different sample rate
-    const nyquist = sampleRate / 2;
-    const binWidth = nyquist / bufferLength;
+    for (let i = 0; i <= scaleDivisions; i++) {
+        const frequency = (i / scaleDivisions) * maxFrequency;
+        const x = (frequency / maxFrequency) * canvas.width;
 
-    // ENTER THE NUMBER OF LABELS HERE //
-    const labelCount = 18; // Number of labels you want along the bottom
-    for (let i = 0; i <= labelCount; i++) {
-        const freq = (i * nyquist) / labelCount;
-        const x = (i * canvas.width) / labelCount;
-        
-        // Display frequency in Hz or kHz for clarity
-        const label = freq >= 1000 ? (freq / 1000).toFixed(1) + ' kHz' : Math.round(freq) + ' Hz';
-        ctx.fillText(label, x, canvas.height - 5); // Position label slightly above the bottom
+        // Draw frequency label
+        ctx.fillText(`${Math.round(frequency)} Hz`, x, canvas.height - fontSize - 5);
     }
 }
