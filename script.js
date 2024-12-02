@@ -36,7 +36,7 @@ startButton.addEventListener('click', () => {
         });
 
     // Hide the start button after initializing the audio
-    startButton.style.display = 'none';
+    startButton.style.display = 'hidden';
 });
 
 // Draw the spectrum
