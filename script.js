@@ -90,7 +90,9 @@ function draw() {
 
 
 function drawFrequencyScale() {
-    const scaleDivisions = 10; // Number of labels
+    let scaleDivisions = 10; // Number of labels
+
+    
     const maxFrequency = 20000; // Maximum frequency displayed
 
     // Calculate responsive font size
@@ -105,5 +107,19 @@ function drawFrequencyScale() {
 
         // Draw frequency label
         ctx.fillText(`${Math.round(frequency)} Hz`, x, canvas.height - fontSize - 5);
+    }
+}
+
+function updateScaleDivisions() {
+    const width = window.innerWidth;
+
+    if (width > 1200) {
+        scaleDivisions = 10; // Larger screens
+    } else if (width > 800) {
+        scaleDivisions = 7; // Medium screens
+    } else if (width > 400) {
+        scaleDivisions = 5; // Small screens
+    } else {
+        scaleDivisions = 3; // Very small screens
     }
 }
