@@ -65,14 +65,7 @@ function draw() {
     for (let i = 0; i < bufferLength; i++) {
         
         barHeight = dataArray[i] * 1.5;
-        //Create colors per bar using RGB
-        /*
-        red = (10 + (i * 1)) % 125;
-        green = (25 + (i * 2) + 15) % 175;
-        blue = (60 + (i * 3) + 30) % 255;
-        //Draw bars
-        ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-        */
+
         //Create colors using HSL values
         hue = 360 - Math.floor(((i / bufferLength) * 360) * 2 % 360);
         //console.log(hue);
@@ -84,31 +77,43 @@ function draw() {
     }
 
     // Draw frequency scale at the bottom of the canvas
-    drawFrequencyScale();
-
+    drawFrequencyScale()
 }
 
-
-function drawFrequencyScale() {
-    let scaleDivisions = 6; // Number of labels
-
+    // Draw frequency scale at the bottom of the canvas
+    function drawFrequencyScale() {
+        let scaleDivisions = 5; // Default number of labels
+        updateScaleDivisions(); // Adjust based on screen size
+        const minFrequency = 1000;  // Minimum frequency displayed
+        const maxFrequency = 18000; // Maximum frequency displayed
     
-    const maxFrequency = 20000; // Maximum frequency displayed
-
-    // Calculate responsive font size
-    const fontSize = Math.max(canvas.width / 50, 12); // Minimum font size 12px
-    ctx.font = `${fontSize}px Arial`;
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'center';
-
-    for (let i = 0; i <= scaleDivisions; i++) {
-        const frequency = (i / scaleDivisions) * maxFrequency;
-        const x = (frequency / maxFrequency) * canvas.width;
-
-        // Draw frequency label
-        ctx.fillText(`${Math.round(frequency)} Hz`, x, canvas.height - fontSize - 5);
+        // Calculate responsive font size
+        const fontSize = Math.max(canvas.width / 50, 12); // Minimum font size 12px
+        ctx.font = `${fontSize}px Arial`;
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+    
+        const frequencyRange = maxFrequency - minFrequency; // Total frequency range
+    
+        // Define padding so labels are not cut off at edges
+        const padding = fontSize * 2; // Proportional padding based on font size
+        const availableWidth = canvas.width - 2 * padding; // Space for labels to fit
+    
+        // Frequency Scale Loop
+        for (let i = 0; i <= scaleDivisions; i++) {
+            // Calculate evenly spaced frequency values
+            const frequency = minFrequency + (i / scaleDivisions) * frequencyRange;
+    
+            // Map frequency to x position on canvas, keeping padding for visibility
+            const x = padding + ((frequency - minFrequency) / frequencyRange) * availableWidth;
+    
+            // Draw frequency label
+            ctx.fillText(`${Math.round(frequency)} Hz`, x, canvas.height - fontSize - 5);
+        }
     }
-}
+    
+    
+
 
 function updateScaleDivisions() {
     const width = window.innerWidth;
@@ -116,7 +121,7 @@ function updateScaleDivisions() {
     if (width > 1200) {
         scaleDivisions = 10; // Larger screens
     } else if (width > 800) {
-        scaleDivisions = 7; // Medium screens
+        scaleDivisions = 8; // Medium screens
     } else if (width > 400) {
         scaleDivisions = 5; // Small screens
     } else {
