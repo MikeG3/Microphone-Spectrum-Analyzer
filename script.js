@@ -90,7 +90,7 @@ function draw() {
 
 
 function drawFrequencyScale() {
-    let scaleDivisions = 10; // Number of labels
+    let scaleDivisions = 6; // Number of labels
 
     
     const maxFrequency = 20000; // Maximum frequency displayed
