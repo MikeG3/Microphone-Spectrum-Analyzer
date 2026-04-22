@@ -79,7 +79,7 @@ function draw() {
 
         const barHeight = dataArray[i] * 1.5;
 
-        const hue = 360 - Math.floor(((i / bufferLength) * 360) * 2 % 360);
+        const hue = 360 - Math.floor(((i / bufferLength) * 360) * 6 % 360);
         ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
         const nextFrequency = (i + 1) * frequencyPerBin;
@@ -128,7 +128,7 @@ function draw() {
                 label = freq + " Hz";
             }
 
-            ctx.fillText(label, x, canvas.height - fontSize - 5);
+            ctx.fillText(label, x, canvas.height - fontSize + 30);
         }
     }
 
