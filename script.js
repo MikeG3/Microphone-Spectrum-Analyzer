@@ -11,7 +11,7 @@ document.body.insertBefore(startButton, canvas);
 
 let audioCtx, analyser, bufferLength, dataArray;
 //Minimum and max resolution is 64 to 32768 - "Frequency per bin:", audioCtx.sampleRate / analyser.fftSize
-const FrequencyResolution = 512;
+const FrequencyResolution = 32768;
 
 // Event listener for the Start button
 startButton.addEventListener('click', () => {
@@ -44,11 +44,17 @@ function draw() {
     requestAnimationFrame(draw); // Keep drawing on every frame
     analyser.getByteFrequencyData(dataArray);
 
+    //Audio Variables
     const sampleRate = audioCtx.sampleRate; // Usually 44100 Hz or 48000 Hz
     const frequencyPerBin = sampleRate / analyser.fftSize; // Hz per bin
+    const minFrequency = 20; // 20 Hz
     const maxFrequency = 20000; // 20 kHz
 
-    //debug audio data
+    //Padding
+    const padding = 20; // or same as fontSize * 2
+    const availableWidth = canvas.width - 2 * padding;
+
+    //DEBUG AUDIO DATA
     //console.log("Frequency per bin:", audioCtx.sampleRate / analyser.fftSize);
     //console.log("Data array:", dataArray);
 
@@ -64,16 +70,23 @@ function draw() {
 
     for (let i = 0; i < bufferLength; i++) {
         
-        barHeight = dataArray[i] * 1.5;
+        const frequency = i * frequencyPerBin;
 
-        //Create colors using HSL values
-        hue = 360 - Math.floor(((i / bufferLength) * 360) * 2 % 360);
-        //console.log(hue);
-        ctx.fillStyle = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        if (frequency < minFrequency || frequency > maxFrequency) continue;
+
+        const x = padding + getLogPosition(frequency, minFrequency, maxFrequency, canvas.width);
+
+        const barHeight = dataArray[i] * 1.5;
+
+        const hue = 360 - Math.floor(((i / bufferLength) * 360) * 2 % 360);
+        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+
+        const nextFrequency = (i + 1) * frequencyPerBin;
+        const nextX = getLogPosition(nextFrequency, minFrequency, maxFrequency, canvas.width);
+
+        const barWidth = Math.max(nextX - x, 1);
+
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-
-        //x += barWidth No Gap between bars
-        x += barWidth + 1; //Makes a blank space between bars
     }
 
     // Draw frequency scale at the bottom of the canvas
@@ -82,10 +95,9 @@ function draw() {
 
     // Draw frequency scale at the bottom of the canvas
     function drawFrequencyScale() {
-        let scaleDivisions = 5; // Default number of labels
-        updateScaleDivisions(); // Adjust based on screen size
-        const minFrequency = 1000;  // Minimum frequency displayed
-        const maxFrequency = 18000; // Maximum frequency displayed
+        const scaleDivisions = updateScaleDivisions();
+        const minFrequency = 20;  // Minimum frequency displayed
+        const maxFrequency = 20000; // Maximum frequency displayed
     
         // Calculate responsive font size
         const fontSize = Math.max(canvas.width / 50, 12); // Minimum font size 12px
@@ -101,30 +113,31 @@ function draw() {
     
         // Frequency Scale Loop
         for (let i = 0; i <= scaleDivisions; i++) {
-            // Calculate evenly spaced frequency values
-            const frequency = minFrequency + (i / scaleDivisions) * frequencyRange;
-    
-            // Map frequency to x position on canvas, keeping padding for visibility
-            const x = padding + ((frequency - minFrequency) / frequencyRange) * availableWidth;
-    
-            // Draw frequency label
+            const frequency = minFrequency * Math.pow(
+                maxFrequency / minFrequency,
+                i / scaleDivisions
+            );
+
+            const x = padding + getLogPosition(frequency, minFrequency, maxFrequency, availableWidth);
+
             ctx.fillText(`${Math.round(frequency)} Hz`, x, canvas.height - fontSize - 5);
         }
     }
-    
-    
-
 
 function updateScaleDivisions() {
     const width = window.innerWidth;
 
-    if (width > 1200) {
-        scaleDivisions = 10; // Larger screens
-    } else if (width > 800) {
-        scaleDivisions = 8; // Medium screens
-    } else if (width > 400) {
-        scaleDivisions = 5; // Small screens
-    } else {
-        scaleDivisions = 3; // Very small screens
-    }
+    if (width > 1200) return 10;
+    if (width > 800) return 8;
+    if (width > 400) return 5;
+    return 3;
+}
+
+// Logarithmic mapping function to position frequencies on the canvas
+function getLogPosition(frequency, minFreq, maxFreq, width) {
+    const logMin = Math.log10(minFreq);
+    const logMax = Math.log10(maxFreq);
+    const logFreq = Math.log10(frequency);
+
+    return ((logFreq - logMin) / (logMax - logMin)) * width;
 }
