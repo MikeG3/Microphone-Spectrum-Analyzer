@@ -51,7 +51,8 @@ function draw() {
     const maxFrequency = 20000; // 20 kHz
 
     //Padding
-    const padding = 20; // or same as fontSize * 2
+    const fontSize = Math.max(canvas.width / 50, 12);
+    const padding = fontSize * 2;
     const availableWidth = canvas.width - 2 * padding;
 
     //DEBUG AUDIO DATA
@@ -111,16 +112,23 @@ function draw() {
         const padding = fontSize * 2; // Proportional padding based on font size
         const availableWidth = canvas.width - 2 * padding; // Space for labels to fit
     
+        const frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
+
         // Frequency Scale Loop
-        for (let i = 0; i <= scaleDivisions; i++) {
-            const frequency = minFrequency * Math.pow(
-                maxFrequency / minFrequency,
-                i / scaleDivisions
-            );
+        for (let freq of frequencies) {
+            if (freq < minFrequency || freq > maxFrequency) continue;
 
-            const x = padding + getLogPosition(frequency, minFrequency, maxFrequency, availableWidth);
+            const x = padding + getLogPosition(freq, minFrequency, maxFrequency, availableWidth);
 
-            ctx.fillText(`${Math.round(frequency)} Hz`, x, canvas.height - fontSize - 5);
+            // Format label
+            let label;
+            if (freq >= 1000) {
+                label = (freq / 1000) + " kHz";
+            } else {
+                label = freq + " Hz";
+            }
+
+            ctx.fillText(label, x, canvas.height - fontSize - 5);
         }
     }
 
