@@ -148,10 +148,15 @@ function draw() {
         const availableWidth = canvas.width - 2 * padding; // Space for labels to fit
     
         //Designated Frequency Labels
-        const frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
+        //const frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
+        let frequencies;
+        
         if (isMobile) {
-            frequencies.push(20, 150, 500, 1000, 2000, 5000, 20000);
+            frequencies = [20, 100, 500, 1000, 2000, 5000, 20000];
+        } else {
+            frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
         }
+        
 
         // Frequency Scale Loop
         for (let freq of frequencies) {
