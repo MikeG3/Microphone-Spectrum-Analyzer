@@ -149,6 +149,9 @@ function draw() {
     
         //Designated Frequency Labels
         const frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
+        if (isMobile) {
+            frequencies.push(20, 150, 500, 1000, 2000, 5000, 20000);
+        }
 
         // Frequency Scale Loop
         for (let freq of frequencies) {
@@ -156,7 +159,7 @@ function draw() {
 
             const x = padding + getLogPosition(freq, minFrequency, maxFrequency, availableWidth);
 
-            // Format label
+            // Format label to Hz or KHz
             let label;
             if (freq >= 1000) {
                 label = (freq / 1000) + " kHz";
