@@ -80,6 +80,12 @@ function draw() {
     const padding = fontSize * 2;
     const availableWidth = canvas.width - 2 * padding;
 
+    //Bar Height Multiplier Responsive to Screen Size
+    let barHeightMultiplier = 1.5;
+    if (isMobile) {
+        barHeightMultiplier = 1.8;
+    }
+
     //DEBUG AUDIO DATA
     //console.log("Frequency per bin:", audioCtx.sampleRate / analyser.fftSize);
     //console.log("Data array:", dataArray);
@@ -102,7 +108,7 @@ function draw() {
 
         const x = padding + getLogPosition(frequency, minFrequency, maxFrequency, canvas.width);
 
-        const barHeight = dataArray[i] * 1.5;
+        const barHeight = dataArray[i] * barHeightMultiplier;
 
         //Color Selection
         const hue = 360 - Math.floor((i / bufferLength) * 360); //Linear
