@@ -1,3 +1,9 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -9,6 +15,7 @@ body {
     color: white;
     padding: 0;
     font-family: Arial;
+    height: 100%;
 }
 
 canvas {
@@ -21,6 +28,7 @@ canvas {
     position: relative; /* Ensure alignment respects its container */
     left: 0;        /* Aligns to the left */
     align-items: left;
+    height: 100vh;
 }
 
 button {

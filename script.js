@@ -81,10 +81,14 @@ function draw() {
     const availableWidth = canvas.width - 2 * padding;
 
     //Bar Height Multiplier Responsive to Screen Size
-    let barHeightMultiplier = 1.5;
+    //let barHeightMultiplier = 1;
+    let gamma = 1; //Logarithmic multiplier for bar height - 1 is curreent behaviour, as gamma decreases, it boosts lower frequencies more and higher frequencies less, creating a more balanced visual representation across the spectrum. Adjusting gamma can help to enhance the visibility of lower frequencies while preventing higher frequencies from dominating the display.
     if (isMobile) {
-        barHeightMultiplier = 2;
+        //barHeightMultiplier = 6;
+        gamma = 0.55;
     }
+    const maxVal = Math.max(...dataArray);
+    const minimumBarHeight = 1;
 
     //DEBUG AUDIO DATA
     //console.log("Frequency per bin:", audioCtx.sampleRate / analyser.fftSize);
@@ -108,7 +112,16 @@ function draw() {
 
         const x = padding + getLogPosition(frequency, minFrequency, maxFrequency, canvas.width);
 
-        const barHeight = dataArray[i] * barHeightMultiplier;
+        //const barHeight = dataArray[i] * barHeightMultiplier;
+        
+        let normalized = dataArray[i] / (maxVal || 1);
+        normalized = Math.pow(normalized, gamma);
+        const barHeight = Math.max(normalized * (canvas.height * 0.9), minimumBarHeight);
+        
+        /*
+        normalized = Math.pow(normalized, gamma);
+        const barHeight = Math.max(normalized * canvas.height * 0.9, minimumBarHeight);
+        */
 
         //Color Selection
         const hue = 360 - Math.floor((i / bufferLength) * 360); //Linear
