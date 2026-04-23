@@ -83,7 +83,7 @@ function draw() {
     //Bar Height Multiplier Responsive to Screen Size
     let barHeightMultiplier = 1.5;
     if (isMobile) {
-        barHeightMultiplier = 1.8;
+        barHeightMultiplier = 2;
     }
 
     //DEBUG AUDIO DATA
