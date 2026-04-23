@@ -90,7 +90,12 @@ function draw() {
 
         const barHeight = dataArray[i] * 1.5;
 
-        const hue = 360 - Math.floor(((i / bufferLength) * 360) * 6 % 360);
+        //Color Selection
+        const hue = 360 - Math.floor((i / bufferLength) * 360); //Linear
+        /*
+        const t = (Math.log10(frequency) - logMin) / logRange; // Logarithmic mapping for color
+        const hue = 360 - (t * 360);
+        */
         ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
         const nextFrequency = (i + 1) * frequencyPerBin;
@@ -107,9 +112,14 @@ function draw() {
 
     // Draw frequency scale at the bottom of the canvas
     function drawFrequencyScale() {
+        // Update scale divisions based on window width for responsiveness
         const scaleDivisions = updateScaleDivisions();
         const minFrequency = 20;  // Minimum frequency displayed
         const maxFrequency = 20000; // Maximum frequency displayed
+
+        // Check if the device is mobile for text height adjustment and set it
+        const isMobile = window.innerWidth < 600;
+        const textHeight = isMobile ? 0 : 30; // Adjust text height for mobile devices
     
         // Calculate responsive font size
         const fontSize = Math.max(canvas.width / 50, 12); // Minimum font size 12px
@@ -123,6 +133,7 @@ function draw() {
         const padding = fontSize * 2; // Proportional padding based on font size
         const availableWidth = canvas.width - 2 * padding; // Space for labels to fit
     
+        //Designated Frequency Labels
         const frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
 
         // Frequency Scale Loop
@@ -139,7 +150,7 @@ function draw() {
                 label = freq + " Hz";
             }
 
-            ctx.fillText(label, x, canvas.height - fontSize + 30);
+            ctx.fillText(label, x, canvas.height - fontSize + textHeight);
         }
     }
 
