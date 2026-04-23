@@ -2,11 +2,18 @@ const canvas = document.getElementById('spectrum_canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 
-// Create and add the Start button only if it doesn’t exist
+// Create and add the Start button and style it
 const startButton = document.createElement('button');
 startButton.textContent = "Start Spectrum Analyzer";
-startButton.style.padding = '10px 20px';
-startButton.style.fontSize = '16px';
+Object.assign(startButton.style, {
+    padding: '10px 20px',
+    fontSize: '50px',
+    backgroundColor: '#000000',
+    color: '#FFFFFF',
+    border: '2px solid #FFFFFF',
+    borderRadius: '50px',
+    boxShadow: '0 0 40px #ffffff',
+});
 document.body.insertBefore(startButton, canvas);
 
 let audioCtx, analyser, bufferLength, dataArray;
@@ -15,6 +22,10 @@ const FrequencyResolution = 32768;
 
 // Event listener for the Start button
 startButton.addEventListener('click', () => {
+
+    //Remove Start button after click
+    startButton.remove();
+
     // Initialize AudioContext and Analyser after user gesture
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioCtx.createAnalyser();
