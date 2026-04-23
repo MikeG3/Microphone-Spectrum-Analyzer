@@ -1,6 +1,7 @@
 const canvas = document.getElementById('spectrum_canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
+const isMobile = window.innerWidth < 600;
 
 // Create and add the Start button and style it
 const startButton = document.createElement('button');
@@ -14,6 +15,19 @@ Object.assign(startButton.style, {
     borderRadius: '50px',
     boxShadow: '0 0 40px #ffffff',
 });
+
+if (isMobile) {
+    Object.assign(startButton.style, {
+    padding: '10px 20px',
+    fontSize: '30px',
+    backgroundColor: '#000000',
+    color: '#FFFFFF',
+    border: '2px solid #FFFFFF',
+    borderRadius: '30px',
+    boxShadow: '0 0 30px #ffffff',
+    });
+}
+
 document.body.insertBefore(startButton, canvas);
 
 let audioCtx, analyser, bufferLength, dataArray;
