@@ -132,8 +132,8 @@ function draw() {
         const maxFrequency = 20000; // Maximum frequency displayed
 
         // Check if the device is mobile for text height adjustment and set it
-        const isMobile = window.innerWidth < 600;
-        const textHeight = isMobile ? 0 : 30; // Adjust text height for mobile devices
+        //const isMobile = window.innerWidth < 600;
+        const textHeight = isMobile ? 10 : 30; // Adjust text height for mobile devices
     
         // Calculate responsive font size
         const fontSize = Math.max(canvas.width / 50, 12); // Minimum font size 12px
