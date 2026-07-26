@@ -1,7 +1,6 @@
 /* ================================
    GLOBAL
 ================================ */
-
 *,
 *::before,
 *::after {
@@ -36,7 +35,6 @@ body {
 /* ================================
    HEADER
 ================================ */
-
 header {
     text-align: center;
     padding: 40px 20px 20px;
@@ -67,7 +65,6 @@ header h1 {
 /* ================================
    MAIN CONTENT
 ================================ */
-
 main {
     max-width: 900px;
     margin: auto;
@@ -77,7 +74,6 @@ main {
 /* ================================
    START BUTTON
 ================================ */
-
 #startContainer {
     text-align: center;
     margin: 40px 0;
@@ -113,7 +109,6 @@ button:hover {
 /* ================================
    INFORMATION PANELS
 ================================ */
-
 .instructions,
 .roadmap {
     border-radius: 14px;
@@ -151,7 +146,6 @@ button:hover {
    CANVAS
 ================================ */
 canvas {
-
     display: none;
     margin: 35px auto;
     border: 2px solid rgba(255, 255, 255, 0.15);
