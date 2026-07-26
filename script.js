@@ -10,8 +10,6 @@ const isMobile = window.innerWidth < 600;
 const startButton = document.createElement('button');
 startButton.textContent = "Start Spectrum Analyzer";
 
-//Show canvas
-canvas.style.display = "block";
 
 const startContainer = document.getElementById("startContainer");
 startContainer.appendChild(startButton);
@@ -27,11 +25,13 @@ startButton.addEventListener('click', () => {
 document.querySelector("main").classList.add("fadeOut");
 
 setTimeout(() => {
-
+    //remove text
     document.querySelector("header").remove();
     document.querySelector("main").remove();
-
+    //change background
     document.body.style.background = "black";
+    //show canvas
+    canvas.style.display = "block"; 
 
     canvas.style.margin = "0";
     canvas.style.border = "none";
@@ -215,9 +215,3 @@ function getLogPosition(frequency, minFreq, maxFreq, width) {
 
     return ((logFreq - logMin) / (logMax - logMin)) * width;
 }
-
-
-canvas.style.margin = "0";
-canvas.style.border = "none";
-canvas.style.borderRadius = "0";
-canvas.style.boxShadow = "none";
