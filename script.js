@@ -124,7 +124,7 @@ function draw() {
         */
 
         //Color Selection
-        const hue = 360 - Math.floor((i / bufferLength) * 360); //Linear
+        const hue = (268 - Math.floor((i / bufferLength) * 360)) % 360; //Linear
         /*
         const t = (Math.log10(frequency) - logMin) / logRange; // Logarithmic mapping for color
         const hue = 360 - (t * 360);
