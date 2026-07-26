@@ -1,34 +1,20 @@
+
+
 const canvas = document.getElementById('spectrum_canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 const isMobile = window.innerWidth < 600;
 
+
 // Create and add the Start button and style it
 const startButton = document.createElement('button');
 startButton.textContent = "Start Spectrum Analyzer";
-Object.assign(startButton.style, {
-    padding: '10px 20px',
-    fontSize: '50px',
-    backgroundColor: '#000000',
-    color: '#FFFFFF',
-    border: '2px solid #FFFFFF',
-    borderRadius: '50px',
-    boxShadow: '0 0 40px #ffffff',
-});
 
-if (isMobile) {
-    Object.assign(startButton.style, {
-    padding: '10px 20px',
-    fontSize: '30px',
-    backgroundColor: '#000000',
-    color: '#FFFFFF',
-    border: '2px solid #FFFFFF',
-    borderRadius: '30px',
-    boxShadow: '0 0 30px #ffffff',
-    });
-}
+//Show canvas
+canvas.style.display = "block";
 
-document.body.insertBefore(startButton, canvas);
+const startContainer = document.getElementById("startContainer");
+startContainer.appendChild(startButton);
 
 let audioCtx, analyser, bufferLength, dataArray;
 //Minimum and max resolution is 64 to 32768 - "Frequency per bin:", audioCtx.sampleRate / analyser.fftSize
@@ -36,6 +22,23 @@ const FrequencyResolution = 32768;
 
 // Event listener for the Start button
 startButton.addEventListener('click', () => {
+
+    document.querySelector("header").classList.add("fadeOut");
+document.querySelector("main").classList.add("fadeOut");
+
+setTimeout(() => {
+
+    document.querySelector("header").remove();
+    document.querySelector("main").remove();
+
+    document.body.style.background = "black";
+
+    canvas.style.margin = "0";
+    canvas.style.border = "none";
+    canvas.style.borderRadius = "0";
+    canvas.style.boxShadow = "none";
+
+}, 500);
 
     //Remove Start button after click
     startButton.remove();
@@ -212,3 +215,9 @@ function getLogPosition(frequency, minFreq, maxFreq, width) {
 
     return ((logFreq - logMin) / (logMax - logMin)) * width;
 }
+
+
+canvas.style.margin = "0";
+canvas.style.border = "none";
+canvas.style.borderRadius = "0";
+canvas.style.boxShadow = "none";

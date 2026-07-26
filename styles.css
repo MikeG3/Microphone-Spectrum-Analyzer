@@ -1,44 +1,190 @@
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+/* ================================
+   GLOBAL
+================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
+html,
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
     margin: 0;
-    background-color: #000000;
-    color: white;
     padding: 0;
-    font-family: Arial;
-    height: 100%;
+    min-height: 100%;
+    font-family: 'Oxanium', sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%,
+            rgba(100, 60, 255, .18),
+            transparent 35%),
+
+        radial-gradient(circle at 80% 30%,
+            rgba(0, 200, 255, .15),
+            transparent 40%),
+
+        radial-gradient(circle at 50% 90%,
+            rgba(80, 255, 120, .08),
+            transparent 35%),
+
+        linear-gradient(180deg,
+            #06070D,
+            #090D16,
+            #050608);
 }
 
-canvas {
-    background-color: #000000;
-    width: 99%;
-    height: 78%;
-    display: block; /* Removes any inline spacing */
-    margin: 0;      /* Removes default margin */
-    padding: 0;     /* Removes default padding */
-    position: relative; /* Ensure alignment respects its container */
-    left: 0;        /* Aligns to the left */
-    align-items: left;
-    height: 100vh;
+/* ================================
+   HEADER
+================================ */
+
+header {
+    text-align: center;
+    padding: 40px 20px 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: 3px;
+    font-family: 'Orbitron', sans-serif;
+    color: #F5F8FF;
+    text-shadow:
+        0 0 10px rgba(79, 195, 247, .35),
+        0 0 30px rgba(79, 195, 247, .15);
+}
+
+.subtitle {
+    margin-top: 15px;
+    color: #BBBBBB;
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* ================================
+   MAIN CONTENT
+================================ */
+
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ================================
+   START BUTTON
+================================ */
+
+#startContainer {
+    text-align: center;
+    margin: 40px 0;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: .15em;
+    font-weight: 600;
+    background:
+        linear-gradient(135deg,
+            #4FC3F7,
+            #00E5FF,
+            #8A5CFF);
+
+    background-size: 250%;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 18px 50px;
+    font-size: 1.1rem;
     cursor: pointer;
-    margin-bottom: 20px;
+    transition: .35s;
+    box-shadow: 0 0 30px rgba(0, 220, 255, .35);
 }
 
-#title {
-    padding: 5px 10px;
-    margin: 0; 
+button:hover {
+    background-position: right center;
+    box-shadow: 0 0 40px rgba(0, 220, 255, .6);
+}
+
+
+/* ================================
+   INFORMATION PANELS
+================================ */
+
+.instructions,
+.roadmap {
+    border-radius: 14px;
+    padding: 25px;
+    margin: 25px 0;
+    backdrop-filter: blur(8px);
+    background:
+        linear-gradient(135deg,
+            rgba(35, 45, 70, .55),
+            rgba(15, 20, 35, .75));
+
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(120, 170, 255, .15);
+    box-shadow: 0 0 25px rgba(0, 0, 0, .35);
+
+}
+
+.instructions h2,
+.roadmap h2 {
+    margin-top: 0;
+    color: #3FC8FF;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+
+.instructions p,
+.roadmap p {
+    line-height: 1.8;
+    color: #DDDDDD;
+}
+
+/* ================================
+   CANVAS
+================================ */
+canvas {
+
+    display: none;
+    margin: 35px auto;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    background: black;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.45);
+    width: 99%;
+    height: 100vh;
+}
+
+/* ================================
+   MOBILE
+================================ */
+@media (max-width: 768px) {
+
+    header {
+        padding: 25px 15px 10px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .instructions,
+    .roadmap {
+        padding: 20px;
+    }
+
+}
+
+
+.fadeOut {
+    opacity: 0;
+    transition: opacity .5s ease;
+    pointer-events: none;
 }

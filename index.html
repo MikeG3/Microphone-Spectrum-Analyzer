@@ -1,15 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spectrum Analyzer</title>
     <link rel="stylesheet" href="styles.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
+
+<header>
+    <h1>Microphone Spectrum Analyzer</h1>
+    <p class="subtitle">
+        A real-time audio frequency analyzer running entirely in your web browser.
+    </p>
+    <div id="startContainer"></div>
+</header>
+
 <body>
+
+    <main>
+
+        <section class="instructions">
+
+            <h2>Getting Started</h2>
+
+            <p>
+                If you are using a laptop or mobile device, it should have a microphone built in.
+                If you are using a Desktop computer, you may need to connect a microphone. If you already have
+                a webcam with a built in microphone, that should be sufficient.
+            </p>
+
+            <p>
+                To start the spectrum analyzer, simply click on th ebutton labeled 'Start Spectrum Analyzer'.
+                The analyzer will display the audio spectrum in real time from approximately 20 Hz to
+                20 kHz, using a logarithmic frequency scale that more closely matches human hearing.
+            </p>
+
+        </section>
+
+        <section class="roadmap">
+
+            <h2>Coming Soon</h2>
+
+            <p>
+                This project is actively being developed. Planned features include
+                customizable colors, adjustable amplitude scaling, selectable
+                frequency scales, configurable FFT resolution, additional visual
+                effects, and expanded display options.
+            </p>
+
+            <p>
+                A dedicated mobile application is also planned, providing a more
+                streamlined interface and additional functionality optimized for
+                Android and iOS devices.
+            </p>
+
+        </section>
+
+    </main>
+
     <canvas id="spectrum_canvas" width="800" height="400"></canvas>
     <!-- <button id="startButton">Start Spectrum Analyzer</button> -->
-     <!-- Add above code on giihub version for MISSING BUTTON -->
+    <!-- Add above code on giihub version for MISSING BUTTON -->
     <script src="script.js"></script>
 </body>
+
 </html>
