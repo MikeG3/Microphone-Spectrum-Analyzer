@@ -77,6 +77,7 @@ function draw() {
     const frequencyPerBin = sampleRate / analyser.fftSize; // Hz per bin
     const minFrequency = 20; // 20 Hz
     const maxFrequency = 20000; // 20 kHz
+    let barHeightMultiplier = 0.58;
 
     //Padding
     const fontSize = Math.max(canvas.width / 50, 12);
@@ -115,12 +116,14 @@ function draw() {
 
         const x = padding + getLogPosition(frequency, minFrequency, maxFrequency, canvas.width);
 
-        //const barHeight = dataArray[i] * barHeightMultiplier;
+        const barHeight = dataArray[i] * barHeightMultiplier;
         
+        /*
         let normalized = dataArray[i] / (maxVal || 1);
         normalized = Math.pow(normalized, gamma);
         const barHeight = Math.max(normalized * (canvas.height * 0.9), minimumBarHeight);
-        
+        */
+
         /*
         normalized = Math.pow(normalized, gamma);
         const barHeight = Math.max(normalized * canvas.height * 0.9, minimumBarHeight);
@@ -155,11 +158,15 @@ function draw() {
 
         // Check if the device is mobile for text height adjustment and set it
         //const isMobile = window.innerWidth < 600;
-        const textHeight = isMobile ? 10 : 30; // Adjust text height for mobile devices
+        //const textHeight = isMobile ? 10 : 10; // Adjust text height for mobile devices
+        const textHeight = 0;
     
+        // FREQUENCY SCALE FONT & STYLING
         // Calculate responsive font size
-        const fontSize = Math.max(canvas.width / 50, 12); // Minimum font size 12px
-        ctx.font = `${fontSize}px Arial`;
+        //const fontSize = Math.max(canvas.width / 100, 12); // Minimum font size 12px
+        //ctx.font = `${fontSize}px Arial`;
+        const fontSize = 1.25;
+        ctx.font = `${fontSize}rem Arial`;
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
     
