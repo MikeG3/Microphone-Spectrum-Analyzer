@@ -77,7 +77,7 @@ function draw() {
     const frequencyPerBin = sampleRate / analyser.fftSize; // Hz per bin
     const minFrequency = 20; // 20 Hz
     const maxFrequency = 20000; // 20 kHz
-    let barHeightMultiplier = 0.58;
+    let barHeightMultiplier = 0.48;
 
     //Padding
     const fontSize = Math.max(canvas.width / 50, 12);
