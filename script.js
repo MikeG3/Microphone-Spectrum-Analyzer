@@ -162,13 +162,14 @@ function drawFrequencyScale() {
     const availableWidth = canvas.width - leftPadding - rightPadding;
 
     // Check if the device is mobile for text height adjustment and set it
-    //const isMobile = window.innerWidth < 600;
+    const isMobile = window.innerWidth < 600;
     //const textHeight = isMobile ? 10 : 10; // Adjust text height for mobile devices
     const textHeight = 0;
 
     // FREQUENCY SCALE FONT & STYLING
     // Calculate responsive font size
-    const fontSize = 1.25;
+    let fontSize = 1.25;
+    if (isMobile) { fontSize = 0.8; }
     ctx.font = `${fontSize}rem Arial`;
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
