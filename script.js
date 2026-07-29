@@ -22,23 +22,23 @@ const FrequencyResolution = 32768;
 startButton.addEventListener('click', () => {
 
     document.querySelector("header").classList.add("fadeOut");
-document.querySelector("main").classList.add("fadeOut");
+    document.querySelector("main").classList.add("fadeOut");
 
-setTimeout(() => {
-    //remove text
-    document.querySelector("header").remove();
-    document.querySelector("main").remove();
-    //change background
-    document.body.style.background = "black";
-    //show canvas
-    canvas.style.display = "block"; 
+    setTimeout(() => {
+        //remove text
+        document.querySelector("header").remove();
+        document.querySelector("main").remove();
+        //change background
+        document.body.style.background = "black";
+        //show canvas
+        canvas.style.display = "block";
 
-    canvas.style.margin = "0";
-    canvas.style.border = "none";
-    canvas.style.borderRadius = "0";
-    canvas.style.boxShadow = "none";
+        //canvas.style.margin = "0";
+        canvas.style.border = "none";
+        canvas.style.borderRadius = "0";
+        canvas.style.boxShadow = "none";
 
-}, 500);
+    }, 500);
 
     //Remove Start button after click
     startButton.remove();
@@ -82,7 +82,7 @@ function draw() {
     //Padding
     const fontSize = Math.max(canvas.width / 50, 12);
     const padding = fontSize * 2;
-    const availableWidth = canvas.width - 2 * padding;
+    const availableWidth = canvas.width - 2 * padding; //Not Active
 
     //Bar Height Multiplier Responsive to Screen Size
     //let barHeightMultiplier = 1;
@@ -109,7 +109,7 @@ function draw() {
     let hue = 0, saturation = 100, lightness = 50;
 
     for (let i = 0; i < bufferLength; i++) {
-        
+
         const frequency = i * frequencyPerBin;
 
         if (frequency < minFrequency || frequency > maxFrequency) continue;
@@ -117,7 +117,7 @@ function draw() {
         const x = padding + getLogPosition(frequency, minFrequency, maxFrequency, canvas.width);
 
         const barHeight = dataArray[i] * barHeightMultiplier;
-        
+
         /*
         let normalized = dataArray[i] / (maxVal || 1);
         normalized = Math.pow(normalized, gamma);
@@ -149,61 +149,63 @@ function draw() {
     drawFrequencyScale()
 }
 
-    // Draw frequency scale at the bottom of the canvas
-    function drawFrequencyScale() {
-        // Update scale divisions based on window width for responsiveness
-        const scaleDivisions = updateScaleDivisions();
-        const minFrequency = 20;  // Minimum frequency displayed
-        const maxFrequency = 20000; // Maximum frequency displayed
+// Draw frequency scale at the bottom of the canvas
+function drawFrequencyScale() {
+    // Update scale divisions based on window width for responsiveness
+    const scaleDivisions = updateScaleDivisions();
+    const minFrequency = 20;  // Minimum frequency displayed
+    const maxFrequency = 20000; // Maximum frequency displayed
+    const firstLabelWidth = ctx.measureText("20 Hz").width;
+    const lastLabelWidth = ctx.measureText("20 kHz").width;
+    const leftPadding = firstLabelWidth / 2;
+    const rightPadding = lastLabelWidth / 2;
+    const availableWidth = canvas.width - leftPadding - rightPadding;
 
-        // Check if the device is mobile for text height adjustment and set it
-        //const isMobile = window.innerWidth < 600;
-        //const textHeight = isMobile ? 10 : 10; // Adjust text height for mobile devices
-        const textHeight = 0;
-    
-        // FREQUENCY SCALE FONT & STYLING
-        // Calculate responsive font size
-        //const fontSize = Math.max(canvas.width / 100, 12); // Minimum font size 12px
-        //ctx.font = `${fontSize}px Arial`;
-        const fontSize = 1.25;
-        ctx.font = `${fontSize}rem Arial`;
-        ctx.fillStyle = 'white';
-        ctx.textAlign = 'center';
-    
-        const frequencyRange = maxFrequency - minFrequency; // Total frequency range
-    
-        // Define padding so labels are not cut off at edges
-        const padding = fontSize * 2; // Proportional padding based on font size
-        const availableWidth = canvas.width - 2 * padding; // Space for labels to fit
-    
-        //Designated Frequency Labels
-        //const frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
-        let frequencies;
-        
-        if (isMobile) {
-            frequencies = [20, 100, 500, 2000, 5000, 20000];
-        } else {
-            frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
-        }
-        
+    // Check if the device is mobile for text height adjustment and set it
+    //const isMobile = window.innerWidth < 600;
+    //const textHeight = isMobile ? 10 : 10; // Adjust text height for mobile devices
+    const textHeight = 0;
 
-        // Frequency Scale Loop
-        for (let freq of frequencies) {
-            if (freq < minFrequency || freq > maxFrequency) continue;
+    // FREQUENCY SCALE FONT & STYLING
+    // Calculate responsive font size
+    const fontSize = 1.25;
+    ctx.font = `${fontSize}rem Arial`;
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
 
-            const x = padding + getLogPosition(freq, minFrequency, maxFrequency, availableWidth);
+    const frequencyRange = maxFrequency - minFrequency; // Total frequency range
 
-            // Format label to Hz or KHz
-            let label;
-            if (freq >= 1000) {
-                label = (freq / 1000) + " kHz";
-            } else {
-                label = freq + " Hz";
-            }
+    // Define padding so labels are not cut off at edges
+    const padding = fontSize * 2; // Proportional padding based on font size
 
-            ctx.fillText(label, x, canvas.height - fontSize + textHeight);
-        }
+    //Designated Frequency Labels
+    //const frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
+    let frequencies;
+
+    if (isMobile) {
+        frequencies = [20, 100, 500, 2000, 5000, 20000];
+    } else {
+        frequencies = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
     }
+
+
+    // Frequency Scale Loop
+    for (let freq of frequencies) {
+        if (freq < minFrequency || freq > maxFrequency) continue;
+
+        const x = leftPadding + getLogPosition(freq, minFrequency, maxFrequency, availableWidth);
+
+        // Format label to Hz or KHz
+        let label;
+        if (freq >= 1000) {
+            label = (freq / 1000) + " kHz";
+        } else {
+            label = freq + " Hz";
+        }
+
+        ctx.fillText(label, x, canvas.height - fontSize + textHeight);
+    }
+}
 
 function updateScaleDivisions() {
     const width = window.innerWidth;

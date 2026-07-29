@@ -146,14 +146,15 @@ button:hover {
    CANVAS
 ================================ */
 canvas {
-    display: none;
-    margin: 35px auto;
+    height: 100vh;
+    width: 100dvw;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     background: black;
     box-shadow: 0 0 35px rgba(0, 0, 0, 0.45);
-    width: 99%;
-    height: 100vh;
 }
 
 /* ================================
